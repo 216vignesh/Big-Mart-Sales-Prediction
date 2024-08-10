@@ -1,29 +1,25 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
-import pickle
+from joblib import load
 
-# Create a Flask application
 app = Flask(__name__)
 
-# Load your trained model
-model = pickle.load(open('model.pkl', 'rb'))
+# Load the model using joblib
+model = load('./models/advanced_sales_prediction_pipeline.pkl')
+
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get JSON data from request
-        data = request.get_json()
-        # Convert data into DataFrame
+        data = {key: request.form[key] for key in request.form.keys()}
         data_df = pd.DataFrame([data])
-        
-        # Make prediction
         predictions = model.predict(data_df)
-        
-        # Return the prediction as JSON
-        return jsonify({'prediction': list(predictions)})
-    
+        return f'Predicted Sales: {predictions[0]}'
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return f'Error: {str(e)}'
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
