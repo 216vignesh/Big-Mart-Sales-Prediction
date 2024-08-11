@@ -1,29 +1,26 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
-import pickle
-
-# Create a Flask application
+from joblib import load
+import mlflow.pyfunc
 app = Flask(__name__)
+mlflow.set_tracking_uri('https://a98b-24-240-132-86.ngrok-free.app')
+# Load the model using joblib
+# model = load('./models/advanced_sales_prediction_pipeline.pkl')
+model = mlflow.pyfunc.load_model('runs:/364eeab46b4d40eb9b04ae3aaef52412/model')
 
-# Load your trained model
-model = pickle.load(open('model.pkl', 'rb'))
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get JSON data from request
-        data = request.get_json()
-        # Convert data into DataFrame
+        data = {key: request.form[key] for key in request.form.keys()}
         data_df = pd.DataFrame([data])
-        
-        # Make prediction
         predictions = model.predict(data_df)
-        
-        # Return the prediction as JSON
-        return jsonify({'prediction': list(predictions)})
-    
+        return f'Predicted Sales: {predictions[0]}'
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return f'Error: {str(e)}'
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
