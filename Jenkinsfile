@@ -12,6 +12,8 @@ pipeline {
         }
         stage('Setup Python Environment') {
             steps {
+                bat 'python -m venv venv'
+                bat '.\\venv\\Scripts\\activate'
                 bat 'pip install --user -r requirements.txt'
             }
         }
@@ -41,18 +43,12 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    bat "docker push $DOCKER_IMAGE"
-                }
-            }
-        }
+        
         stage('Trigger Airflow Deployment') {
             steps {
                 script {
                     // Make sure to update your API URL and add authentication if needed
-                    bat "curl -X POST -H 'Content-Type: application/json' -d '{\"conf\": {\"image_tag\": \"${DOCKER_IMAGE}\"}}' https://0862-24-240-132-86.ngrok-free.app/api/v1/dags/deploy_docker_image/dagRuns"
+                    bat "curl -X POST -H 'Content-Type: application/json' -d '{\"conf\": {\"image_tag\": \"${DOCKER_IMAGE}\"}}' http://localhost:8080/api/v1/dags/deploy_docker_image/dagRuns"
                 }
             }
         }
