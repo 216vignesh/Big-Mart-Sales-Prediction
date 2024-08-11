@@ -43,7 +43,7 @@ mlflow.set_experiment("BigMart_Sales_Prediction")
 #     joblib.dump(pipeline, 'models/advanced_sales_prediction_model.pkl')
 def train_model(data_path):
     with mlflow.start_run():
-        mlflow.log_artifact('BigMartSalesModel.pkl')
+        mlflow.log_artifact('BigMartSalesModel.pkl',artifact_path="runs")
         df_train = pd.read_csv(data_path)
         numeric_features = ['Item_Weight', 'Item_Visibility', 'Item_MRP', 'Outlet_Age']
         categorical_features = ['Item_Fat_Content', 'Outlet_Size', 'Outlet_Location_Type', 'Outlet_Type', 'Item_Type', 'Outlet_Location_Type*Outlet_Type', 'Outlet_Location_Type*Item_Type']
