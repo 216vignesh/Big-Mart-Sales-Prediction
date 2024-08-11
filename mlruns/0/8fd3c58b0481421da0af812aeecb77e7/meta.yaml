@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/8fd3c58b0481421da0af812aeecb77e7/artifacts
+end_time: 1723349423648
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8fd3c58b0481421da0af812aeecb77e7
+run_name: XGBoost
+run_uuid: 8fd3c58b0481421da0af812aeecb77e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1723349406792
+status: 4
+tags: []
+user_id: VIGNESH$

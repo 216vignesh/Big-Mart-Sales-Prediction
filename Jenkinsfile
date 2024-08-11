@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'vigneshsundaram1006/bigmartsales:latest'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
     }
     stages {
         stage('Checkout') {
@@ -28,6 +29,15 @@ pipeline {
             steps {
                 script {
                     bat "docker build -t $DOCKER_IMAGE ."
+                }
+            }
+        }
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        bat "docker push $DOCKER_IMAGE"
+                    }
                 }
             }
         }
