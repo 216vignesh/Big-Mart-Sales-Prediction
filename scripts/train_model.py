@@ -77,7 +77,15 @@ def train_model(data_path):
         mlflow.log_param("max_depth", 3)
 
         # Log model
-        mlflow.sklearn.log_model(pipeline, "model")
+        mlflow.sklearn.log_model(pipeline, "model", registered_model_name="BigMartSalesModel")
+        # Transition model to production stage
+        client = mlflow.tracking.MlflowClient()
+        client.transition_model_version_stage(
+            name="BigMartSalesModel",
+            version=client.get_latest_versions("BigMartSalesModel", stages=["None"])[0].version,
+            stage="Production",
+            archive_existing_versions=True
+        )
         
         # Save the pipeline as a pickle file (optional if already logged via MLflow)
         # joblib.dump(pipeline, 'models/advanced_sales_prediction_model.pkl')

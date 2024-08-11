@@ -27,6 +27,13 @@ pipeline {
                 bat 'python scripts\\train_model.py'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    bat "docker build -t $DOCKER_IMAGE ."
+                }
+            }
+        }
         
         
         
