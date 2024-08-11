@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/764089386584888988/9d0fc995e04c416d918c332e495e82fa/artifacts
+end_time: 1723344073452
+entry_point_name: ''
+experiment_id: '764089386584888988'
+lifecycle_stage: active
+run_id: 9d0fc995e04c416d918c332e495e82fa
+run_name: orderly-stoat-422
+run_uuid: 9d0fc995e04c416d918c332e495e82fa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1723344069221
+status: 4
+tags: []
+user_id: VIGNESH$
