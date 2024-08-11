@@ -11,31 +11,33 @@ pipeline {
         }
         stage('Preprocess Data') {
             steps {
-                sh 'python scripts/preprocess.py'
+                bat 'python scripts\\preprocess.py'
             }
         }
         stage('Train Model') {
             steps {
-                sh 'python scripts/train_model.py'
+                bat 'python scripts\\train_model.py'
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("$DOCKER_IMAGE")
+                    bat "docker build -t $DOCKER_IMAGE ."
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    bat "docker push $DOCKER_IMAGE"
                 }
             }
         }
         stage('Trigger Airflow Deployment') {
             steps {
                 script {
-                    // HTTP request to Airflow's API to trigger a DAG
-                    httpRequest(
-                        url: 'https://0862-24-240-132-86.ngrok-free.app/api/v1/dags/deploy_docker_image/dagRuns',
-                        method: 'POST',
-                        contentType: 'application/json',
-                        requestBody: '{"conf": {"image_tag": "' + DOCKER_IMAGE + '"}}'
-                    )
+                    // Make sure to update your API URL and add authentication if needed
+                    bat "curl -X POST -H 'Content-Type: application/json' -d '{\"conf\": {\"image_tag\": \"${DOCKER_IMAGE}\"}}' https://0862-24-240-132-86.ngrok-free.app/api/v1/dags/deploy_docker_image/dagRuns"
                 }
             }
         }
