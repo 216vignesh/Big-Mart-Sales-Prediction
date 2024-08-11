@@ -9,7 +9,7 @@ mlflow.set_tracking_uri('http://localhost:5000')
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
-
+#test
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
