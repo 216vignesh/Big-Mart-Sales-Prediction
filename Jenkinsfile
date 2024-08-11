@@ -33,7 +33,7 @@ pipeline {
         stage('Trigger Airflow Deployment') {
             steps {
                 script {
-                    bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"conf\\\": {\\\"image_tag\\\": \\\"${env.DOCKER_IMAGE}\\\"}}\" https://7159-24-240-132-86.ngrok-free.app/api/v1/dags/deploy_docker_image/dagRuns"
+                    bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"conf\\\": {\\\"image_tag\\\": \\\"${env.DOCKER_IMAGE}\\\"}}\" http://localhost:8080/api/v1/dags/deploy_docker_image/dagRuns"
                 }
             }
         }
