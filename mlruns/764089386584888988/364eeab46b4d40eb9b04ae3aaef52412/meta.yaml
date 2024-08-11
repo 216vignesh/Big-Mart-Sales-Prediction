@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/764089386584888988/364eeab46b4d40eb9b04ae3aaef52412/artifacts
+end_time: 1723322541978
+entry_point_name: ''
+experiment_id: '764089386584888988'
+lifecycle_stage: active
+run_id: 364eeab46b4d40eb9b04ae3aaef52412
+run_name: ambitious-fox-662
+run_uuid: 364eeab46b4d40eb9b04ae3aaef52412
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1723322529921
+status: 3
+tags: []
+user_id: vigne
