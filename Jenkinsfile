@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Setup Python Environment') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'pip install --user -r requirements.txt'
             }
         }
         stage('Preprocess Data') {
