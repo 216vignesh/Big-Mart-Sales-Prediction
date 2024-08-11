@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/764089386584888988/352dcac11b36443a87d3d78a87358779/artifacts
+end_time: 1723344494138
+entry_point_name: ''
+experiment_id: '764089386584888988'
+lifecycle_stage: active
+run_id: 352dcac11b36443a87d3d78a87358779
+run_name: smiling-vole-446
+run_uuid: 352dcac11b36443a87d3d78a87358779
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1723344490033
+status: 4
+tags: []
+user_id: VIGNESH$
