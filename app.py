@@ -3,7 +3,9 @@ import pandas as pd
 from joblib import load
 import mlflow.pyfunc
 app = Flask(__name__)
+from mlflow.tracking import MlflowClient
 mlflow.set_tracking_uri('http://localhost:5000')
+
 
 
 @app.route('/', methods=['GET'])
@@ -13,7 +15,17 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        model = mlflow.pyfunc.load_model('models:/BigMartSalesModel/Production')
+        # model = mlflow.pyfunc.load_model('models:/BigMartSalesModel/Production')
+        # data = {key: request.form[key] for key in request.form.keys()}
+        # data_df = pd.DataFrame([data])
+        # predictions = model.predict(data_df)
+        # return f'Predicted Sales: {predictions[0]}'
+        client = MlflowClient()
+        model_version_info = client.get_latest_versions('BigMartSalesModel', stages=['Production'])
+        model_uri = f"models:/{model_version_info[0].name}/{model_version_info[0].version}"
+        model = mlflow.pyfunc.load_model(model_uri)
+
+        # Process the input data and predict
         data = {key: request.form[key] for key in request.form.keys()}
         data_df = pd.DataFrame([data])
         predictions = model.predict(data_df)
