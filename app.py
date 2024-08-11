@@ -6,7 +6,7 @@ app = Flask(__name__)
 mlflow.set_tracking_uri('http://localhost:5000')
 # Load the model using joblib
 # model = load('./models/advanced_sales_prediction_pipeline.pkl')
-model = mlflow.pyfunc.load_model('runs:/364eeab46b4d40eb9b04ae3aaef52412/model')
+# model = mlflow.pyfunc.load_model('runs:/364eeab46b4d40eb9b04ae3aaef52412/model')
 
 @app.route('/', methods=['GET'])
 def home():
@@ -15,6 +15,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        model = mlflow.pyfunc.load_model('models:/BigMartSalesModel/Production')
         data = {key: request.form[key] for key in request.form.keys()}
         data_df = pd.DataFrame([data])
         predictions = model.predict(data_df)
