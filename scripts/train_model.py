@@ -16,7 +16,7 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error
 import mlflow
 import mlflow.sklearn
-mlflow.set_tracking_uri('https://a98b-24-240-132-86.ngrok-free.app')
+mlflow.set_tracking_uri('http://localhost:5000')
 mlflow.set_experiment("BigMart_Sales_Prediction")
 # def train_model(data_path):
 #     df_train = pd.read_csv(data_path)
@@ -43,6 +43,7 @@ mlflow.set_experiment("BigMart_Sales_Prediction")
 #     joblib.dump(pipeline, 'models/advanced_sales_prediction_model.pkl')
 def train_model(data_path):
     with mlflow.start_run():
+        mlflow.log_artifact(r'C:\Users\vigne\OneDrive\Documents\ML\Big-Mart-Sales-Prediction\Big-Mart-Sales-Prediction\models\BigMartSalesModel.pkl')
         df_train = pd.read_csv(data_path)
         numeric_features = ['Item_Weight', 'Item_Visibility', 'Item_MRP', 'Outlet_Age']
         categorical_features = ['Item_Fat_Content', 'Outlet_Size', 'Outlet_Location_Type', 'Outlet_Type', 'Item_Type', 'Outlet_Location_Type*Outlet_Type', 'Outlet_Location_Type*Item_Type']
@@ -79,6 +80,6 @@ def train_model(data_path):
         mlflow.sklearn.log_model(pipeline, "model")
         
         # Save the pipeline as a pickle file (optional if already logged via MLflow)
-        joblib.dump(pipeline, 'models/advanced_sales_prediction_model.pkl')
+        # joblib.dump(pipeline, 'models/advanced_sales_prediction_model.pkl')
 if __name__ == "__main__":
     train_model('data/cleaned_data.csv')
