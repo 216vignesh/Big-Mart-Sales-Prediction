@@ -4,7 +4,7 @@ from joblib import load
 import mlflow.pyfunc
 app = Flask(__name__)
 from mlflow.tracking import MlflowClient
-mlflow.set_tracking_uri('http://localhost:5000')
+mlflow.set_tracking_uri('http://192.168.137.1:5000')
 
 
 
