@@ -18,8 +18,7 @@ def predict():
         # model = mlflow.pyfunc.load_model('models:/BigMartSalesModel/Production')
         # data = {key: request.form[key] for key in request.form.keys()}
         # data_df = pd.DataFrame([data])
-        # predictions = model.predict(data_df)
-        # return f'Predicted Sales: {predictions[0]}'
+        
         client = MlflowClient()
         model_version_info = client.get_latest_versions('BigMartSalesModel', stages=['Production'])
         model_uri = f"models:/{model_version_info[0].name}/{model_version_info[0].version}"
